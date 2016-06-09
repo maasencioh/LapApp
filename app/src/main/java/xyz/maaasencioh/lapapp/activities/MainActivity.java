@@ -1,5 +1,7 @@
 package xyz.maaasencioh.lapapp.activities;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -19,6 +21,8 @@ public class MainActivity extends AppCompatActivity {
     TabLayout tabs;
     @BindView(R.id.container)
     ViewPager container;
+
+    private final static String ABOUT_URL = "http://maasencioh.xyz/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,10 +57,16 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.about) {
+            about();
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void about() {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse(ABOUT_URL));
+        startActivity(intent);
     }
 }
