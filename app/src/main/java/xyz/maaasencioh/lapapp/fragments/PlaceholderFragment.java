@@ -1,14 +1,16 @@
 package xyz.maaasencioh.lapapp.fragments;
 
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.Chronometer;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import xyz.maaasencioh.lapapp.R;
 
 /**
@@ -17,11 +19,14 @@ import xyz.maaasencioh.lapapp.R;
 public class PlaceholderFragment extends Fragment {
 
     private static final String ARG_SECTION_NUMBER = "section_number";
+    private Boolean running;
 
-    @BindView(R.id.section_label)
-    TextView sectionLabel;
+    @BindView(R.id.chronometer)
+    Chronometer chronometer;
 
-    public PlaceholderFragment() {}
+    public PlaceholderFragment() {
+        running = false;
+    }
 
     /**
      * Returns a new instance of this fragment for the given section
@@ -40,8 +45,18 @@ public class PlaceholderFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
         ButterKnife.bind(this, rootView);
 
-        sectionLabel.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
         return rootView;
     }
 
+    @OnClick(R.id.chronometer)
+    public void onClick() {
+        if (running) {
+            chronometer.stop();
+        }
+        else {
+            chronometer.setBase(SystemClock.elapsedRealtime());
+            chronometer.start();
+        }
+        running = !running;
+    }
 }
